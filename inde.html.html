@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colombia GO | Guía Turística Virtual</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        /* --- CONFIGURACIÓN GLOBAL --- */
+        :root {
+            --verde-neon: #4da126;
+            --azul-electrico: #00e5ff;
+            --blanco-puro: #ffffff;
+            --negro-tech: rgba(0, 0, 0, 0.85);
+        }
+
+        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* --- FONDO FIJO --- */
+        .hero-background {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: url('fondo.png'); 
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.8));
+            z-index: -1;
+        }
+
+        /* --- NAVEGACIÓN --- */
+        nav {
+            position: fixed; top: 0; width: 100%;
+            padding: 25px; display: flex; justify-content: center; gap: 40px;
+            z-index: 1000; background: rgba(0,0,0,0.5); backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        nav a { 
+            color: white; text-decoration: none; font-weight: 700; 
+            text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;
+            transition: 0.3s;
+        }
+        nav a:hover { color: var(--azul-electrico); text-shadow: 0 0 10px var(--azul-electrico); }
+
+        section {
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+            width: 100%;
+            padding: 100px 20px;
+        }
+
+        /* --- COLUMNAS LATERALES --- */
+        .column-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex; justify-content: space-between;
+            pointer-events: none; 
+            z-index: 5;
+        }
+
+        .column-left, .column-right {
+            width: 160px; height: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: space-around;
+            padding: 100px 0;
+            pointer-events: auto;
+        }
+
+        .column-left { border-right: 1px solid rgba(255, 255, 255, 0.1); }
+        .column-right { border-left: 1px solid rgba(255, 255, 255, 0.1); }
+
+        .vertical-tag {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 600;
+        }
+
+        .natural-icon-decor {
+            color: var(--azul-electrico);
+            font-size: 2.2rem;
+            opacity: 0.8;
+            filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.4));
+        }
+
+        /* --- HERO SECTION --- */
+        .hero-content {
+            display: flex; flex-direction: column; align-items: center; z-index: 3;
+            text-align: center; padding: 0 180px;
+        }
+
+        .glass-hero-qr {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(30px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 40px; 
+            padding: 20px;
+            width: 420px; height: 420px;
+            box-shadow: 0 0 60px rgba(0, 229, 255, 0.3), inset 0 0 30px rgba(0, 229, 255, 0.1);
+            position: relative; overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        .glass-hero-qr::after {
+            content: ''; position: absolute; top: -100%; left: -100%;
+            width: 300%; height: 300%;
+            background: conic-gradient(transparent, transparent, transparent, var(--azul-electrico));
+            animation: rotate-border 6s linear infinite; z-index: -1;
+        }
+        .glass-hero-qr::before {
+            content: ''; position: absolute; inset: 6px;
+            background: rgba(10, 10, 10, 0.95); border-radius: 36px; z-index: -1;
+        }
+        @keyframes rotate-border { 100% { transform: rotate(360deg); } }
+
+        /* --- TECNOLOGÍA --- */
+        #experiencia {
+            background: radial-gradient(circle at center, rgba(0, 229, 255, 0.15) 0%, rgba(0, 0, 0, 0.9) 80%);
+            z-index: 2;
+        }
+
+        .tech-wrapper {
+            background: var(--negro-tech); 
+            backdrop-filter: blur(15px);
+            padding: 60px 40px; 
+            border-radius: 40px;
+            border: 1px solid rgba(0, 229, 255, 0.1);
+            width: 95%; 
+            max-width: 1100px; 
+            text-align: center;
+            z-index: 10;
+        }
+
+        .features-container {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-top: 40px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03); padding: 30px 20px; border-radius: 25px;
+            border: 1px solid rgba(0, 229, 255, 0.1); transition: 0.4s;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .feature-card:hover { 
+            background: rgba(0, 229, 255, 0.08); transform: translateY(-10px);
+            border-color: var(--azul-electrico);
+        }
+        .feature-card i { font-size: 2.2rem; color: var(--azul-electrico); margin-bottom: 15px; }
+
+        /* --- INTEGRANTES --- */
+        #nosotros { position: relative; overflow: hidden; background: #050505; }
+        #particles-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+
+        .team-container {
+            display: flex; flex-wrap: wrap; justify-content: center;
+            gap: 15px; width: 100%; max-width: 1100px; z-index: 10;
+        }
+
+        .white-card {
+            background: white; border-radius: 18px; width: 170px; height: 260px;
+            padding: 20px 12px; display: flex; flex-direction: column; align-items: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6); transition: 0.3s;
+            color: #1a2b40; position: relative; overflow: hidden;
+        }
+        .white-card .profile-img { width: 120px; height: 150px; border-radius: 10px; object-fit: cover; margin-bottom: 10px; }
+        .info-hover {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--azul-electrico); color: #000; padding: 20px;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; font-weight: bold; font-size: 0.85rem;
+            opacity: 0; transform: translateY(100%); transition: 0.4s ease;
+        }
+        .white-card:hover .info-hover { opacity: 1; transform: translateY(0); }
+
+        /* --- SECCIÓN CONTACTO --- */
+        #contacto {
+            align-items: center;
+            justify-content: center;
+            padding: 100px 0;
+        }
+
+        .contact-grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            width: calc(100% - 320px); 
+            max-width: 1200px;
+            background: #000;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 25px;
+            padding: 60px 50px;
+            z-index: 20;
+            margin: 0 auto;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.9);
+        }
+
+        .contact-info-side {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-info-side h2 {
+            color: var(--azul-electrico);
+            font-size: 2.2rem;
+            letter-spacing: 5px;
+        }
+
+        .info-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid var(--azul-electrico);
+        }
+
+        .contact-form-side {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            color: white;
+            font-family: inherit;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: var(--azul-electrico);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+        }
+
+        .btn-enviar-contact {
+            background: var(--azul-electrico);
+            color: #000;
+            border: none;
+            padding: 18px;
+            border-radius: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-enviar-contact:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px var(--azul-electrico);
+        }
+
+        .social-row-footer {
+            display: flex;
+            gap: 30px;
+            margin-top: 15px;
+        }
+
+        .social-row-footer a {
+            color: white;
+            font-size: 1.8rem;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .social-row-footer a:hover {
+            color: var(--azul-electrico);
+            transform: translateY(-5px);
+        }
+
+        .btn-descarga-cian { 
+            background: var(--azul-electrico); color: #000; text-decoration: none; 
+            padding: 18px 45px; border-radius: 50px; font-weight: 800; 
+            transition: 0.3s; display: inline-block; margin-top: 40px;
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.4); text-transform: uppercase;
+        }
+
+        @media (max-width: 992px) {
+            .contact-grid-container { grid-template-columns: 1fr; width: 90%; }
+            .column-container { display: none; }
+            .hero-content { padding: 0 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero-background"></div>
+    <div class="bg-overlay"></div>
+
+    <div class="column-container">
+        <div class="column-left">
+            <i class="fas fa-leaf natural-icon-decor"></i>
+            <p class="vertical-tag">DESCUBRE LA RUTA</p>
+            <i class="fas fa-mountain natural-icon-decor"></i>
+        </div>
+        <div class="column-right">
+            <i class="fas fa-compass natural-icon-decor"></i>
+            <p class="vertical-tag">VIVE LA AVENTURA</p>
+            <i class="fas fa-map-marker-alt natural-icon-decor"></i>
+        </div>
+    </div>
+
+    <nav>
+        <a href="#inicio">Inicio</a>
+        <a href="#experiencia">Tecnología</a>
+        <a href="#nosotros">Integrantes</a>
+        <a href="#contacto">Contacto</a>
+    </nav>
+
+    <section id="inicio">
+        <div class="hero-content">
+            <img src="logo.png" style="width: 360px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.9)); margin-bottom: 25px;">
+            <p style="color: var(--blanco-puro); font-size: 1.5rem; font-weight: 700; margin-bottom: 30px;">¡Explora el mundo con tu guía turístico virtual y personal!</p>
+            
+            <div class="glass-hero-qr">
+                <div style="background: white; padding: 15px; border-radius: 20px; width: 240px; height: 240px;">
+                    <img src="https://chart.googleapis.com/chart?chs=240x240&cht=qr&chl=https://tu-web.com/descarga-app.apk" alt="QR" style="width: 100%; height: 100%;">
+                </div>
+            </div>
+            
+            <a href="https://tu-web.com/descarga-app.apk" download class="btn-descarga-cian">DESCARGAR APLICACION</a>
+        </div>
+    </section>
+
+    <section id="experiencia">
+        <div class="tech-wrapper">
+            <h2 style="color: var(--azul-electrico); margin-bottom: 20px; font-size: 2rem; letter-spacing: 3px;">TECNOLOGÍA DE VANGUARDIA</h2>
+            <div class="features-container">
+                <div class="feature-card"><i class="fas fa-map-marked-alt"></i><h3>Rutas Completas</h3><p>Localización exacta.</p></div>
+                <div class="feature-card"><i class="fas fa-sync"></i><h3>Actualizaciones</h3><p>Nuevos puntos cada día.</p></div>
+                <div class="feature-card"><i class="fas fa-brain"></i><h3>Diseño Pro</h3><p>Interfaz intuitiva.</p></div>
+                <div class="feature-card"><i class="fas fa-save"></i><h3>Guardado</h3><p>Tus favoritos a mano.</p></div>
+                <div class="feature-card"><i class="fas fa-globe"></i><h3>Bilingüe</h3><p>Español e Inglés.</p></div>
+                <div class="feature-card"><i class="fas fa-check-circle"></i><h3>Veracidad</h3><p>Info verificada.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="nosotros">
+        <canvas id="particles-canvas"></canvas>
+        <div style="display:flex; flex-direction:column; align-items:center; width:100%; position:relative; z-index:10;">
+            <div style="background: rgba(0, 229, 255, 0.05); border: 2px solid var(--azul-electrico); padding: 20px 50px; text-align: center; margin-bottom: 50px; clip-path: polygon(10% 0, 90% 0, 100% 50%, 90% 100%, 10% 100%, 0 50%);">
+                <h2 style="letter-spacing: 5px; color: white;">MENTES CREADORAS</h2>
+            </div>
+            <div class="team-container">
+                <div class="white-card"><h2>JOSE</h2><img src="jose.jpeg" class="profile-img"><p>Developer</p><div class="info-hover">Arquitecto de código.</div></div>
+                <div class="white-card"><h2>SEBASTIAN</h2><img src="sebastian.jpeg" class="profile-img"><p>UI/UX</p><div class="info-hover">Creador de interfaces.</div></div>
+                <div class="white-card"><h2>BRAGUEAHN</h2><img src="braguean.jpeg" class="profile-img"><p>Strategy</p><div class="info-hover">Estratega de expansión.</div></div>
+                <div class="white-card"><h2>JUAN</h2><img src="juan.jpeg" class="profile-img"><p>Backend</p><div class="info-hover">Guardián de datos.</div></div>
+                <div class="white-card"><h2>JEFFREY</h2><img src="jeffrey.jpeg" class="profile-img"><p>Mobile</p><div class="info-hover">Especialista Mobile.</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto">
+        <div class="contact-grid-container">
+            
+            <div class="contact-info-side">
+                <h2>CONTACTO</h2>
+                <p style="color: rgba(255,255,255,0.7); font-style: italic;">¿Listo para tu próxima aventura? El equipo de Colombia GO! está a un mensaje de distancia.</p>
+                
+                <div class="info-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <p style="color: var(--azul-electrico); font-weight: bold; font-size: 0.9rem;">Ubicación</p>
+                        <p>Bogotá, Colombia</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <p style="color: var(--azul-electrico); font-weight: bold; font-size: 0.9rem;">Email</p>
+                        <p>colombiago2026@gmail.com</p>
+                    </div>
+                </div>
+
+                <div class="social-row-footer">
+                    <a href="https://www.instagram.com/colombiago2026/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://x.com/colombia_g61606" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                </div>
+            </div>
+
+            <form id="contact-form" class="contact-form-side" action="https://formspree.io/f/colombiago2026@gmail.com" method="POST">
+                <input type="text" name="nombre" class="form-input" placeholder="Nombre completo" required>
+                <input type="email" name="_replyto" class="form-input" placeholder="Correo electrónico" required>
+                <textarea name="mensaje" class="form-input" rows="5" placeholder="Cuéntanos sobre tu próxima ruta..." required></textarea>
+                <button type="submit" class="btn-enviar-contact">Enviar Mensaje</button>
+            </form>
+
+        </div>
+    </section>
+
+    <footer style="background: #000; padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; position: relative; z-index: 100;">
+        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.4); letter-spacing: 2px;">
+            © 2026 <span style="color: var(--azul-electrico); font-weight: bold;">ColombiaGO!</span> | Todos los derechos reservados.
+        </p>
+    </footer>
+
+    <script>
+        /* --- LÓGICA DE PARTÍCULAS --- */
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray;
+        function resizeCanvas() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+        window.addEventListener('resize', () => { resizeCanvas(); init(); });
+        class Particle {
+            constructor(x, y, dx, dy, size) { this.x = x; this.y = y; this.dx = dx; this.dy = dy; this.size = size; }
+            draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fillStyle = '#00e5ff33'; ctx.fill(); }
+            update() {
+                if (this.x > canvas.width || this.x < 0) this.dx = -this.dx;
+                if (this.y > canvas.height || this.y < 0) this.dy = -this.dy;
+                this.x += this.dx; this.y += this.dy; this.draw();
+            }
+        }
+        function init() {
+            resizeCanvas(); particlesArray = [];
+            let n = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < n; i++) {
+                particlesArray.push(new Particle(Math.random()*canvas.width, Math.random()*canvas.height, (Math.random()*0.5)-0.25, (Math.random()*0.5)-0.25, (Math.random()*3)+1));
+            }
+        }
+        function animate() { requestAnimationFrame(animate); ctx.clearRect(0, 0, canvas.width, canvas.height); particlesArray.forEach(p => p.update()); }
+        init(); animate();
+
+        /* --- ENVÍO DE FORMULARIO SIN RECARGA --- */
+        const form = document.getElementById('contact-form');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = form.querySelector('button');
+            const originalText = btn.innerText;
+            
+            btn.innerText = 'Enviando...';
+            btn.disabled = true;
+
+            const data = new FormData(form);
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+                alert('¡Mensaje enviado! Colombia GO! se pondrá en contacto pronto.');
+                form.reset();
+            } else {
+                alert('Vaya, algo falló. ¿Podrías confirmarme tu correo en Formspree primero?');
+            }
+            
+            btn.innerText = originalText;
+            btn.disabled = false;
+        });
+    </script>
+</body>
+</html>
