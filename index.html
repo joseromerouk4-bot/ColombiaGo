@@ -302,10 +302,38 @@
             box-shadow: 0 10px 30px rgba(0, 229, 255, 0.4); text-transform: uppercase;
         }
 
-        @media (max-width: 992px) {
-            .contact-grid-container { grid-template-columns: 1fr; width: 90%; }
-            .column-container { display: none; }
-            .hero-content { padding: 0 20px; }
+        /* --- RESPONSIVE DESIGN AJUSTADO --- */
+        @media (max-width: 1024px) {
+            .column-container { display: none; } 
+            .hero-content { padding: 0 40px; }
+            .contact-grid-container { width: 95%; padding: 40px 20px; }
+        }
+
+        @media (max-width: 768px) {
+            nav { gap: 15px; padding: 15px; }
+            nav a { font-size: 0.65rem; letter-spacing: 1px; }
+
+            .hero-content img { max-width: 280px !important; width: 100% !important; }
+            .hero-content p { font-size: 1.1rem !important; }
+
+            .glass-hero-qr { width: 300px; height: 300px; border-radius: 30px; padding: 10px; }
+            .glass-hero-qr > div { width: 180px; height: 180px; }
+            .glass-hero-qr img { width: 100%; height: 100%; }
+
+            .features-container { grid-template-columns: 1fr 1fr; } 
+            
+            .contact-grid-container { grid-template-columns: 1fr; gap: 30px; }
+            .contact-info-side h2 { font-size: 1.8rem; text-align: center; }
+            
+            .team-container { gap: 10px; }
+            .white-card { width: 140px; height: 220px; }
+            .white-card .profile-img { width: 100px; height: 120px; }
+        }
+
+        @media (max-width: 480px) {
+            .features-container { grid-template-columns: 1fr; } 
+            .btn-descarga-cian { padding: 15px 30px; font-size: 0.8rem; }
+            nav { flex-wrap: wrap; justify-content: center; gap: 10px; padding-top: 15px; }
         }
     </style>
 </head>
@@ -336,12 +364,12 @@
 
     <section id="inicio">
         <div class="hero-content">
-            <img src="logo.png" style="width: 360px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.9)); margin-bottom: 25px;">
+            <img src="logo.png" style="max-width: 360px; width: 100%; filter: drop-shadow(0 0 8px rgba(255,255,255,0.9)); margin-bottom: 25px;">
             <p style="color: var(--blanco-puro); font-size: 1.5rem; font-weight: 700; margin-bottom: 30px;">¡Explora el mundo con tu guía turístico virtual y personal!</p>
             
             <div class="glass-hero-qr">
                 <div style="background: white; padding: 15px; border-radius: 20px; width: 240px; height: 240px;">
-                    <img src="https://chart.googleapis.com/chart?chs=240x240&cht=qr&chl=https://tu-web.com/descarga-app.apk" alt="QR" style="width: 100%; height: 100%;">
+                    <img src="https://chart.googleapis.com/chart?chs=240x240&cht=qr&chl=https://tu-web.com/descarga-app.apk" alt="QR">
                 </div>
             </div>
             
@@ -370,11 +398,11 @@
                 <h2 style="letter-spacing: 5px; color: white;">MENTES CREADORAS</h2>
             </div>
             <div class="team-container">
-                <div class="white-card"><h2>JOSE</h2><img src="jose.jpeg" class="profile-img"><p>Developer</p><div class="info-hover">Arquitecto de código.</div></div>
-                <div class="white-card"><h2>SEBASTIAN</h2><img src="sebastian.jpeg" class="profile-img"><p>UI/UX</p><div class="info-hover">Creador de interfaces.</div></div>
-                <div class="white-card"><h2>BRAGUEAHN</h2><img src="braguean.jpeg" class="profile-img"><p>Strategy</p><div class="info-hover">Estratega de expansión.</div></div>
-                <div class="white-card"><h2>JUAN</h2><img src="juan.jpeg" class="profile-img"><p>Backend</p><div class="info-hover">Guardián de datos.</div></div>
-                <div class="white-card"><h2>JEFFREY</h2><img src="jeffrey.jpeg" class="profile-img"><p>Mobile</p><div class="info-hover">Especialista Mobile.</div></div>
+                <div class="white-card"><h2>JOSE</h2><img src="jose.jpeg" class="profile-img"><p>Backend</p><div class="info-hover">Diseñador de interfaces, despliegue y codigo.</div></div>
+                <div class="white-card"><h2>SEBASTIAN</h2><img src="sebastian.jpeg" class="profile-img"><p>UI/UX</p><div class="info-hover">Creador de interfaces, desarrollador de experiencia de usuario y codigo.</div></div>
+                <div class="white-card"><h2>BRAGUEAHN</h2><img src="braguean.jpeg" class="profile-img"><p>Front</p><div class="info-hover">Desarrollador de manual de usuario.</div></div>
+                <div class="white-card"><h2>JUAN</h2><img src="juan.jpeg" class="profile-img"><p>Database</p><div class="info-hover">Creador y especialista de la Base de Datos.</div></div>
+                <div class="white-card"><h2>JEFFREY</h2><img src="jeffrey.jpeg" class="profile-img"><p>Backend</p><div class="info-hover">Creador de interfaces, especialista en informacion y codigo.</div></div>
             </div>
         </div>
     </section>
@@ -409,9 +437,9 @@
                 </div>
             </div>
 
-            <form id="contact-form" class="contact-form-side" action="https://formspree.io/f/colombiago2026@gmail.com" method="POST">
+            <form id="contact-form" class="contact-form-side" action="https://formspree.io/f/xqegjrjj" method="POST">
                 <input type="text" name="nombre" class="form-input" placeholder="Nombre completo" required>
-                <input type="email" name="_replyto" class="form-input" placeholder="Correo electrónico" required>
+                <input type="email" name="email" class="form-input" placeholder="Correo electrónico" required>
                 <textarea name="mensaje" class="form-input" rows="5" placeholder="Cuéntanos sobre tu próxima ruta..." required></textarea>
                 <button type="submit" class="btn-enviar-contact">Enviar Mensaje</button>
             </form>
